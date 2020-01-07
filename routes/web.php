@@ -11,6 +11,32 @@
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+use App\Task;
+use Illuminate\Http\Request;
+
 Route::get('/', function () {
-    return view('welcome');
+    $tasks = Task::orderBy('created_at', 'asc')->get();
+    return view('tasks', [
+        'tasks' => $tasks
+    ]);
+});
+
+Route::post('/task', function (Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|max:255',
+    ]);
+    if($validator->fails()){
+        return redirect('/')
+            ->withInput()
+            ->withErrors($validator);
+    }
+    //ToDo: Add New Task
+});
+
+Route::delete('/task/{task}', function (Task $task) {
+    //
 });

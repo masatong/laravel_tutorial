@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ToDoリスト</title>
+    <title>ToDoList</title>
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <!-- Styles -->
@@ -13,7 +13,7 @@
             <!-- navbar -->
             <div class="navbar-header">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    ToDoリスト
+                    ToDoList
                 </a>
             </div>
         </div>

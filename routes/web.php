@@ -34,9 +34,10 @@ Route::post('/task', function (Request $request) {
             ->withInput()
             ->withErrors($validator);
     }
-    //ToDo: Add New Task
+
 });
 
 Route::delete('/task/{task}', function (Task $task) {
-    //
+    $task->delete();
+    return redirect('/');
 });

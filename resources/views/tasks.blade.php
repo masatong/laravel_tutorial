@@ -32,34 +32,36 @@
         </div>
         <!-- Current Tasks -->
         @if (count($tasks) > 0)
-        <div class="panel panel-default">
-            Current Tasks
-        </div>
-        <div class="panel-body">
-            <table class="table table-striped task-table">
-            <thread>
-                <th>Task</th>
-                <th>&nbsp;</th>
-            </thred>
-            <tbody>
-                @foreach($tasks as $task)
-                <tr>
-                    <td class="table-text"><div>{{ $task->name }}</div></td>
-                    <!-- Delete Button -->
-                    <td>
-                        <form action="{{ url('task/'.$task->id }}" method="POST">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn-danger">
-                                <i class="fa fa-trash"></i> Delete
-                            </button>
-                        </form>
-                    </td>
-                    <td>&nbsp;</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </div>
+            <div class="panel panel-default">
+                Current Tasks
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped task-table">
+                    <thread>
+                        <th>Task</th>
+                        <th>&nbsp;</th>
+                    </thred>
+                    <tbody>
+                        @foreach($tasks as $task)
+                            <tr>
+                                <td class="table-text"><div>{{ $task->name }}</div></td>
+                                <!-- Delete Button -->
+                                <td>
+                                <form action="{{ url('task/'.$task->id) }}" method="POST">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+                                        <button type="submit" class="btn-danger">
+                                            <i class="fa fa-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
     </div>
 </div>
 @endsection

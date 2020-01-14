@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TaskTest extends TestCase
 {
-    // テストケースごとにデータベースをリフレッシュしてマイグレーションウィ再実行する
+    // テストケースごとにデータベースをリフレッシュしてマイグレーションを再実行する
     use RefreshDatabase;
 
     /**
@@ -32,7 +32,7 @@ class TaskTest extends TestCase
     {
         $response = $this->post('/folders/1/tasks/create', [
             'title' => 'Sample task',
-            'due_date' => 123, // 不正なデータ(数値)
+            'due_date' => 123, // 不正なデータ（数値）
         ]);
 
         $response->assertSessionHasErrors([
@@ -44,11 +44,11 @@ class TaskTest extends TestCase
      * 期限日が過去日付の場合はバリデーションエラー
      * @test
      */
-    public function due_date_should_be_past()
+    public function due_date_should_not_be_past()
     {
         $response = $this->post('/folders/1/tasks/create', [
             'title' => 'Sample task',
-            'due_date' => Carbon::yesterday()->format('Y/m/d'), // 不正なデータ(昨日の日付)
+            'due_date' => Carbon::yesterday()->format('Y/m/d'), // 不正なデータ（昨日の日付）
         ]);
 
         $response->assertSessionHasErrors([

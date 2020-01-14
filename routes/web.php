@@ -1,5 +1,6 @@
 <?php
 
+Route::get('/', 'HomeController@index')->name('home');
 // 選択されたフォルダに紐づいたタスクの表示
 Route::get('/folders/{id}/tasks', 'TaskController@index')->name('tasks.index');
 // フォルダ作成ページ表示

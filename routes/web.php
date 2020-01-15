@@ -1,17 +1,20 @@
 <?php
 
-Route::get('/', 'HomeController@index')->name('home');
-// 選択されたフォルダに紐づいたタスクの表示
-Route::get('/folders/{id}/tasks', 'TaskController@index')->name('tasks.index');
-// フォルダ作成ページ表示
-Route::get('/folders/create', 'FolderController@showCreateForm')->name('folders.create');
-// フォルダ作成処理の実行
-Route::post('/folders/create', 'FolderController@create');
+Route::group(['middleware' => 'auth'], function() {
+    
+    Route::get('/', 'HomeController@index')->name('home');
+    // 選択されたフォルダに紐づいたタスクの表示
+    Route::get('/folders/{id}/tasks', 'TaskController@index')->name('tasks.index');
+    // フォルダ作成ページ表示
+    Route::get('/folders/create', 'FolderController@showCreateForm')->name('folders.create');
+    // フォルダ作成処理の実行
+    Route::post('/folders/create', 'FolderController@create');
 
-Route::get('/folders/{id}/tasks/create', 'TaskController@showCreateForm')->name('tasks.create');
-Route::post('/folders/{id}/tasks/create', 'TaskController@create');
+    Route::get('/folders/{id}/tasks/create', 'TaskController@showCreateForm')->name('tasks.create');
+    Route::post('/folders/{id}/tasks/create', 'TaskController@create');
 
-Route::get('/folders/{id}/tasks/{task_id}/edit', 'TaskController@showEditForm')->name('tasks.edit');
-Route::post('/folders/{id}/tasks/{task_id}/edit', 'TaskController@edit');
+    Route::get('/folders/{id}/tasks/{task_id}/edit', 'TaskController@showEditForm')->name('tasks.edit');
+    Route::post('/folders/{id}/tasks/{task_id}/edit', 'TaskController@edit');
+});
 
 Auth::routes();

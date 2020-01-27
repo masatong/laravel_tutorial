@@ -50,6 +50,11 @@
                                     <td><a href="{{ route('tasks.edit', ['id' => $task->folder_id, 'task_id' => $task->id]) }}">
                                             編集
                                         </a></td>
+                                    <td><form action="{{ route('tasks.delete', ['id' => $task->folder_id, 'task_id' => $task->id]) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="_method" value="delete">
+                                        <input type="submit" name="" value="削除">
+                                        </form></td>
                                 </tr>
                             @endforeach
                         </tbody>

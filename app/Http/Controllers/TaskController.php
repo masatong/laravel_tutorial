@@ -58,6 +58,7 @@ class TaskController extends Controller
     {
         $task = new Task();
         $task->title = $request->title;
+        $task->content = $request->content;
         $task->due_date = $request->due_date;
 
         $folder->tasks()->save($task);
@@ -67,6 +68,21 @@ class TaskController extends Controller
         ]);
     }
     
+/**
+     * タスク内容確認フォーム
+     * @param Folder $folder
+     * @param Task $task
+     * @return \Illuminate\View\View
+     */
+    public function showContentForm(Folder $folder, Task $task)
+    {
+        $this->checkRelation($folder, $task);
+
+        return view('tasks/content', [
+            'task' => $task,
+        ]);
+    }
+
     /**
      * タスク編集フォーム
      * @param Folder $folder
@@ -94,6 +110,7 @@ class TaskController extends Controller
         $this->checkRelation($folder, $task);
 
         $task->title = $request->title;
+        $task->content = $request->content;
         $task->status = $request->status;
         $task->due_date = $request->due_date;
         $task->save();
@@ -124,6 +141,6 @@ class TaskController extends Controller
         return redirect()->route('tasks.index', [
 
             'id' => $task->folder_id,
-        ]);        
+        ]);
     }
 }

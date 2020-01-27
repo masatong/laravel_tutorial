@@ -109,4 +109,21 @@ class TaskController extends Controller
             abort(404);
         }
     }
+
+    /**
+     * タスク削除
+     * @param Folder &folder
+     * @param Task $task
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete(Folder $folder, Task $task)
+    {    
+
+        $task->delete();
+
+        return redirect()->route('tasks.index', [
+
+            'id' => $task->folder_id,
+        ]);        
+    }
 }

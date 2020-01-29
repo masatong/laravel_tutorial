@@ -26,34 +26,28 @@
               <div class="form-group">
                 <label for="title">タイトル</label><br>
                   {{ old('title') ?? $task->title }}
-                <!-- <input type="text" class="form-control" name="title" id="title"
-                       value="{{ old('title') ?? $task->title }}" /> -->
               </div>
               <div class="form-group">
                 <label for="content">内容</label><br>
-                  {{ old('content') ?? $task->content }}
-                <!-- <input type="text" class="form-control" name="content" id="content"
-                       value="{{ old('content') ?? $task->content }}" /> -->
+                <textarea readonly name="content" class="form-control" rows="10">{{ old('content') ?? $task->content }}</textarea>
               </div>
               <div class="form-group">
                 <label for="status">状態</label><br>
-                  {{ old('status') ?? $task->status }}
-                <!-- <select name="status" id="status" class="form-control">
-                  @foreach(\App\Task::STATUS as $key => $val)
-                    <option
-                        value="{{ $key }}"
-                        {{ $key == old('status', $task->status) ? 'selected' : '' }}
-                    >
-                      {{ $val['label'] }}
-                    </option>
-                  @endforeach
-                </select> -->
+                  @switch($task->status)
+                    @case(1)
+                      未着手
+                      @break
+                    @case(2)
+                      着手中
+                      @break
+                    @case(3)
+                      完了
+                      @break
+                  @endswitch
               </div>
               <div class="form-group">
                 <label for="due_date">期限</label><br>
                   {{ old('due_date') ?? $task->formatted_due_date }}
-                <!-- <input type="text" class="form-control" name="due_date" id="due_date"
-                       value="{{ old('due_date') ?? $task->formatted_due_date }}" /> -->
               </div>
               <div class="text-right">
                 <a href="{{ route('tasks.edit', ['id' => $task->folder_id, 'task_id' => $task->id]) }}">

@@ -40,7 +40,9 @@ a.my-navbar-item:hover {
     width: 1px;
 }
 
-.form-control[disabled],
+.form-control[enabled],
+/* .form-control[disabled], */
 .form-control[read-only] {
-    background-color: #fff;
+    background-color: #f4f7f8;
+    /* background-color: #fff; */
 }

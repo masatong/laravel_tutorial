@@ -26,7 +26,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="content">内容</label>
-                                <input type="text" class="form-control" name="content" id="content" value="{{ old('content') }}" />
+                                <textarea name="content" class="form-control" rows="10">{{ old('content') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="due_date">期限</label>

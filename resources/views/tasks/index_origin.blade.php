@@ -1,9 +1,22 @@
-@extends('layout')
-
-@section('content')
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>タスク管理</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header>
+    <nav>
+        <a class="my-navbar-brand" href="/">タスク管理</a>
+    </nav>
+</header>
+<main>
     <div class="container">
         <div class="row">
-            <div class="col-sm-12" style="padding:20px 0; padding-left:0px;">
+            <div class="col-sm-4" style="padding:20px 0; padding-left:0px;">
                 <form class="form-inline" action="#">
                     <div class="form-group">
                         <input type="text" name="keyword" value="{{ $keyword }}" class="form-control" placeholder="キーワードを入力">
@@ -11,7 +24,7 @@
                     <input type="submit" value="検索" class="btn btn-info">
                 </form>
             </div>
-            <!-- <div class="col col-md-4">
+            <div class="col col-md-4">
                 <nav class="panel panel-default">
                     <div class="panel-heading">タスク</div>
                     <div class="panel-body">
@@ -27,7 +40,7 @@
                         @endforeach
                     </div>
                 </nav>
-            </div> -->
+            </div>
             <div class="column col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">タスク</div>
@@ -46,13 +59,12 @@
                                 <th>期限</th>
                                 <th></th>
                                 <th></th>
-                                <th>作成日時</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($tasks as $task)
                                 <tr>
-                                    <td><a href="{{ route('tasks.show', ['id' => $task->id]) }}">{{ $task->title }}</td>
+                                    <td><a href="#">{{ $task->title }}</td>
                                     <td>
                                         <span class="label {{ $task->status_class }}">{{ $task->status_label }}</span>
                                     </td>
@@ -63,19 +75,14 @@
                                             <input type="hidden" name="_method" value="delete">
                                             <input type="submit" name="" value="削除">
                                         </form></td>
-                                        <td>{{ $task->created_at }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="col-sm-12" style="padding:20px 0; padding-left:0px;">
-                <form class="form-inline" action="{{ route('tasks.showAll') }}" method="post">
-                    @csrf
-                    <input type="submit" value="タスクをすべて表示" class="btn btn-info">
-                </form>
-            </div>
         </div>
     </div>
-@endsection
+</main>
+</body>
+</html>

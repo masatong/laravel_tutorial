@@ -12,15 +12,15 @@ class HomeController extends Controller
         // ログインユーザーを取得する
         $user = Auth::user();
 
-        // ログインユーザーに紐づくフォルダを一つ取得する
+        // ログインユーザーに紐づくタスクを一つ取得する
         $task = $user->tasks()->first();
 
-        // まだ一つもタスクを作っていなければホームページをレスポンスする
-        // if (is_null($task)) {
-        //     return view('home');
-        // }
+        // 一つもタスクがなければホームページをレスポンスする
+        if (is_null($task)) {
+            return view('home');
+        }
 
-        // フォルダがあればそのフォルダのタスク一覧にリダイレクトする
+        // タスクがあればタスク一覧にリダイレクトする
         return redirect()->route('tasks.index');
     }
 }

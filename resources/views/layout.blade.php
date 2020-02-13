@@ -23,7 +23,7 @@
             @else
                 <a class="my-navbar-item" href="{{ route('login') }}">ログイン</a>
                 |
-                <a class="my-navbar-item" href="{{ route('register') }}">会員登録</a>
+                <a class="my-navbar-item" href="{{ route('register') }}">新規登録</a>
             @endif
         </div>
     </nav>

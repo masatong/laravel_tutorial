@@ -10,14 +10,37 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // ユーザーのタスクを取得する
-        $tasks = Auth::user()->tasks()->get();
-        // $tasks = Task::all();
+        // キーワード受け取り
+        $keyword = $request->input('keyword');
 
-        return view('tasks/index', [
+        if (empty($keyword)) {
+            // ユーザーの未着手タスクを作成日時の降順で取得する
+            $query = Auth::user()->tasks()->where('status', 1)->orderBy('created_at', 'desc');
+
+        } else {
+            // キーワードで検索する
+            $query = Auth::user()->tasks()->where('title', 'like binary', '%' . $keyword .'%')
+                    ->orWhere('content', 'like binary', '%' . $keyword . '%')
+                    ->orderBy('created_at', 'desc');
+        }
+
+        $tasks = $query->get();
+
+        return view('tasks.index', [
             'tasks' => $tasks,
+            'keyword' => $keyword,
+        ]);
+    }
+
+    public function showAll()
+    {
+        $tasks = Auth::user()->tasks()->get();
+
+        return view('tasks.index', [
+            'tasks' => $tasks,
+            'keyword' => "",
         ]);
     }
 
@@ -34,10 +57,19 @@ class TaskController extends Controller
         $task->content = $request->content;
         $task->due_date = $request->due_date;
 
-        // Auth::user()->save($task);
-        Auth::user()->$task->save();
+        $user = Auth::user();
+        $user->tasks()->save($task);
 
         return redirect()->route('tasks.index');
+    }
+
+    public function showContent(int $id)
+    {
+        $task = Task::find($id);
+
+        return view('tasks/show', [
+            'task' => $task,
+        ]);
     }
 
     /**
@@ -65,6 +97,19 @@ class TaskController extends Controller
         $task->save();
 
         // 
+        return redirect()->route('tasks.index');
+    }
+
+    /**
+     * タスク削除
+     * @param Task $task
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete(Task $task, int $id)
+    {    
+
+        $task->find($id)->delete();
+
         return redirect()->route('tasks.index');
     }
 }

@@ -12,11 +12,11 @@ class HomeController extends Controller
         // ログインユーザーを取得する
         $user = Auth::user();
 
-        // ログインユーザーに紐づくタスクを一つ取得する
-        $task = $user->tasks()->first();
+        // ログインユーザーに紐づくタスクがないか判定
+        $task = $user->tasks()->doesntExist();
 
         // 一つもタスクがなければホームページをレスポンスする
-        if (is_null($task)) {
+        if ($task) {
             return view('home');
         }
 

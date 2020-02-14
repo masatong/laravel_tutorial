@@ -48,7 +48,7 @@
                                 {{ old('due_date') ?? $task->formatted_due_date }}
                             </div>
                             <div class="text-left">
-                                <a href="{{ route('tasks.index') }}">
+                                <a href="{{ route('tasks.showAll') }}">
                                     戻る
                                 </a>
                             </div>

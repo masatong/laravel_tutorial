@@ -59,4 +59,12 @@ class Task extends Model
         return Carbon::createFromFormat('Y-m-d', $this->attributes['due_date'])
             ->format('Y/m/d');
     }
+
+    protected $guarded = [
+        'id',
+        'user_id',
+        'status',
+        'created_at',
+        'updated_at',
+    ];
 }

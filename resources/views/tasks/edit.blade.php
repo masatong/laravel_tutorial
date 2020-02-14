@@ -51,7 +51,7 @@
                                 <input type="text" class="form-control" name="due_date" id="due_date" id="due_date"  value="{{ old('due_date') ?? $task->due_date }}" />
                             </div>
                             <div class="text-left">
-                                <a href="{{ route('tasks.index') }}">
+                                <a href="{{ route('tasks.showAll') }}">
                                     戻る
                                 </a>
                             </div>

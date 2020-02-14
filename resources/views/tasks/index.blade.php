@@ -4,33 +4,16 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12" style="padding:20px 0; padding-left:0px;">
-                <form class="form-inline" action="#">
+                <form class="form-inline" action="{{ route('tasks.showAll') }}">
                     <div class="form-group">
                         <input type="text" name="keyword" value="{{ $keyword }}" class="form-control" placeholder="キーワードを入力">
                     </div>
                     <input type="submit" value="検索" class="btn btn-info">
                 </form>
             </div>
-            <!-- <div class="col col-md-4">
-                <nav class="panel panel-default">
-                    <div class="panel-heading">タスク</div>
-                    <div class="panel-body">
-                        <a href="{{ route('tasks.create') }}" class="btn btn-default btn-block">
-                            タスクを追加する
-                        </a>
-                    </div>
-                    <div class="list-group">
-                        @foreach($tasks as $task)
-                            <a href="{{ route('tasks.index') }}" class="list-group-item">
-                                {{ $task->title }}
-                            </a>
-                        @endforeach
-                    </div>
-                </nav>
-            </div> -->
             <div class="column col-md-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">タスク</div>
+                    <div class="panel-heading">未着手タスク</div>
                     <div class="panel-body">
                         <div class="text-right">
                             <a href="{{ route('tasks.create') }}" class="btn btn-default btn-block">
@@ -71,7 +54,7 @@
                 </div>
             </div>
             <div class="col-sm-12" style="padding:20px 0; padding-left:0px;">
-                <form class="form-inline" action="{{ route('tasks.showAll') }}" method="post">
+                <form class="form-inline" action="{{ route('tasks.showAll') }}">
                     @csrf
                     <input type="submit" value="タスクをすべて表示" class="btn btn-info">
                 </form>

@@ -5,7 +5,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'HomeController@index')->name('home');
 
     Route::get('/tasks', 'TaskController@index')->name('tasks.index');
-    Route::post('/tasks', 'TaskController@showAll')->name('tasks.showAll');
+
+    Route::get('/tasks/all', 'TaskController@showAll')->name('tasks.showAll');
 
     Route::get('/tasks/create', 'TaskController@showCreateForm')->name('tasks.create');
     Route::post('/tasks/create', 'TaskController@create');

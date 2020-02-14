@@ -4,43 +4,48 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use App\Http\Requests\CreateTask;
-use App\Http\Requests\EditTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        // キーワード受け取り
+        // ユーザーの未着手タスクを作成日時の降順で取得する
+        $tasks = Auth::user()->tasks()
+                ->where('status', 1)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+        return view('tasks.index', [
+            'tasks' => $tasks,
+            'keyword' => '',
+        ]);
+    }
+
+    public function showAll(Request $request)
+    {
+        // キーワードの受け取り
         $keyword = $request->input('keyword');
 
         if (empty($keyword)) {
-            // ユーザーの未着手タスクを作成日時の降順で取得する
-            $query = Auth::user()->tasks()->where('status', 1)->orderBy('created_at', 'desc');
+            // ユーザのすべてのタスクを取得する
+            $query = Auth::user()->tasks()
+                    ->orderBy('created_at', 'desc');
 
         } else {
             // キーワードで検索する
-            $query = Auth::user()->tasks()->where('title', 'like binary', '%' . $keyword .'%')
+            $query = Auth::user()->tasks()
+                    ->where('title', 'like binary', '%' . $keyword . '%')
                     ->orWhere('content', 'like binary', '%' . $keyword . '%')
                     ->orderBy('created_at', 'desc');
         }
 
         $tasks = $query->get();
 
-        return view('tasks.index', [
+        return view('tasks.all', [
             'tasks' => $tasks,
             'keyword' => $keyword,
-        ]);
-    }
-
-    public function showAll()
-    {
-        $tasks = Auth::user()->tasks()->get();
-
-        return view('tasks.index', [
-            'tasks' => $tasks,
-            'keyword' => "",
         ]);
     }
 
@@ -53,14 +58,12 @@ class TaskController extends Controller
     {
         $task = new Task();
 
-        $task->title = $request->title;
-        $task->content = $request->content;
-        $task->due_date = $request->due_date;
+        $taskCreate = $task->fill($request->all());
 
         $user = Auth::user();
-        $user->tasks()->save($task);
+        $user->tasks()->save($taskCreate);
 
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.showAll');
     }
 
     public function showContent(int $id)
@@ -84,7 +87,7 @@ class TaskController extends Controller
         ]);
     }
 
-    public function edit(int $id, EditTask $request)
+    public function edit(int $id, Request $request)
     {
         // 1
         $task = Task::find($id);
@@ -97,7 +100,7 @@ class TaskController extends Controller
         $task->save();
 
         // 
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.showAll');
     }
 
     /**
@@ -110,6 +113,6 @@ class TaskController extends Controller
 
         $task->find($id)->delete();
 
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.showAll');
     }
 }
